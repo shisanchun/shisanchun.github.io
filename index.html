@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>sanchun · 前端工程师</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+SC:wght@400;700;900&display=swap"
@@ -133,12 +134,21 @@
         border-bottom: 1px solid var(--border);
       }
       nav .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
         font-weight: 800;
         letter-spacing: 1px;
         background: linear-gradient(90deg, var(--accent), var(--accent-2));
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
+      }
+      nav .logo .nav-logo {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        object-fit: cover;
       }
       .nav-right {
         display: flex;
@@ -194,32 +204,44 @@
         padding-top: 80px;
       }
       .avatar {
-        width: 132px;
-        height: 132px;
+        width: 168px;
+        height: 168px;
         border-radius: 50%;
         display: grid;
         place-items: center;
         font-size: 46px;
         font-weight: 900;
         color: #06121b;
-        background: conic-gradient(from 0deg, var(--accent), var(--accent-2), var(--accent-3), var(--accent));
+        background: linear-gradient(120deg, var(--accent), var(--accent-2), var(--accent-3), var(--accent-2), var(--accent));
+        background-size: 300% 300%;
         box-shadow: var(--glow);
-        animation: spin 8s linear infinite;
+        animation: flow 6s ease infinite;
         margin-bottom: 28px;
       }
-      .avatar span {
-        background: var(--bg);
-        width: 116px;
-        height: 116px;
+      .avatar-inner {
+        width: 152px;
+        height: 152px;
         border-radius: 50%;
         display: grid;
         place-items: center;
         color: var(--text);
-        animation: spin 8s linear infinite reverse;
+        overflow: hidden;
       }
-      @keyframes spin {
-        to {
-          transform: rotate(360deg);
+      .avatar-img {
+        width: 152px;
+        height: 152px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      @keyframes flow {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
         }
       }
       .hero h1 {
@@ -231,6 +253,10 @@
         background-clip: text;
         color: transparent;
         text-shadow: 0 0 60px rgba(94, 234, 212, 0.25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
       }
       .type {
         margin-top: 14px;
@@ -284,10 +310,21 @@
         border-color: var(--accent);
       }
       .scroll {
-        margin-top: 60px;
+        position: fixed;
+        bottom: 28px;
+        left: 0;
+        right: 0;
+        text-align: center;
         color: var(--muted);
         font-size: 13px;
+        letter-spacing: 1px;
         animation: bounce 2s infinite;
+        z-index: 40;
+        transition: opacity 0.4s;
+      }
+      .scroll.hide {
+        opacity: 0;
+        pointer-events: none;
       }
       @keyframes bounce {
         0%,
@@ -515,7 +552,7 @@
     <canvas id="star"></canvas>
 
     <nav>
-      <div class="logo">shisanchun.github.io</div>
+      <div class="logo"><img src="SC.png" alt="SC" class="nav-logo" />shisanchun.github.io</div>
       <div class="nav-right">
         <div class="links">
           <a href="#about" data-i18n="nav.about">关于</a>
@@ -532,8 +569,8 @@
 
     <!-- Hero -->
     <header class="hero wrap">
-      <div class="avatar"><span>SC</span></div>
-      <h1>sanchun</h1>
+      <div class="avatar"><span class="avatar-inner"><img src="u.jpg" alt="头像" class="avatar-img" /></span></div>
+      <h1 class="hero-title">sanchun</h1>
       <div class="type" id="type"></div>
       <p class="tagline" data-i18n="hero.tagline">
         热爱将复杂业务转化为简洁、优雅、流畅界面的前端工程师。专注中后台系统、数据可视化与工程化实践。
@@ -541,7 +578,7 @@
       <div class="cta">
         <a class="btn primary" href="#skills" data-i18n="hero.cta">查看我的技能</a>
       </div>
-      <div class="scroll">向下滚动 ↓</div>
+      <div class="scroll" id="scrollHint" data-i18n="hero.scroll">向下滚动 ↓</div>
     </header>
 
     <!-- About -->
@@ -620,6 +657,7 @@
           "nav.about": "关于", "nav.skills": "技能", "nav.works": "作品", "nav.contact": "联系",
           "hero.tagline": "热爱将复杂业务转化为简洁、优雅、流畅界面的前端工程师。专注中后台系统、数据可视化与工程化实践。",
           "hero.cta": "查看我的技能",
+          "hero.scroll": "向下滚动 ↓",
           "about.t1": "关于", "about.t2": "我",
           "about.p1": "我是一名前端工程师，长期深耕 Vue 生态与企业级中后台应用开发。享受从需求拆解、组件设计到性能优化的完整过程。",
           "about.p2": "我相信好的前端不只是“页面好看”，而是把复杂的业务逻辑藏进顺滑的交互背后——让用户无感，让数据说话。",
@@ -640,6 +678,7 @@
           "nav.about": "About", "nav.skills": "Skills", "nav.works": "Works", "nav.contact": "Contact",
           "hero.tagline": "A frontend engineer who loves turning complex business into clean, elegant and smooth interfaces. Focused on mid-backend systems, data visualization and engineering practices.",
           "hero.cta": "View My Skills",
+          "hero.scroll": "Scroll Down ↓",
           "about.t1": "About ", "about.t2": "Me",
           "about.p1": "I'm a frontend engineer deeply focused on the Vue ecosystem and enterprise mid-backend applications, enjoying the full journey from requirement breakdown, component design to performance optimization.",
           "about.p2": "I believe great frontend is not just 'good-looking pages', but hiding complex business logic behind smooth interactions — making it invisible to users, and letting the data speak.",
@@ -839,6 +878,18 @@
       document.querySelectorAll(".lang button").forEach((b) =>
         b.addEventListener("click", () => applyLang(b.dataset.lang))
       );
+
+      // ===== 滚动提示：到达页面底部时隐藏 =====
+      const scrollHint = document.getElementById("scrollHint");
+      function toggleScrollHint() {
+        const atBottom =
+          window.innerHeight + window.scrollY >=
+          document.documentElement.scrollHeight - 4;
+        scrollHint.classList.toggle("hide", atBottom);
+      }
+      addEventListener("scroll", toggleScrollHint, { passive: true });
+      addEventListener("resize", toggleScrollHint);
+      toggleScrollHint();
     </script>
   </body>
 </html>
